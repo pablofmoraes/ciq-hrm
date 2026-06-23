@@ -1294,11 +1294,14 @@ window.addEventListener('load', function() {
 const API_URL = 'https://script.google.com/macros/s/AKfycbzI23Cdzb7bCmtx1DdPijMOAofjRgkRiWc8FZj3OnZWp3uo-4IRQN4VzIMm512fhZIErg/exec';
 
 function apiCall(params) {
+  // Usa GET com query string — requisição "simples" que não dispara preflight CORS
   const qs = Object.keys(params)
     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
     .join('&');
-  return fetch(API_URL + '?' + qs, { mode: 'cors' })
-    .then(r => r.json());
+  return fetch(API_URL + '?' + qs, {
+    method: 'GET',
+    redirect: 'follow'
+  }).then(r => r.json());
 }
 // ================================================================
 // SALVAR — sobrescreve a função salvar para enviar à API
