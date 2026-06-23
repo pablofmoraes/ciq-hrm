@@ -1000,6 +1000,11 @@ function switchTab(id, btn) {
   const tab = document.getElementById('tab-' + id);
   if (tab) tab.classList.add('active');
   if (btn) btn.classList.add('active');
+  // Inicializa calendário quando painel é aberto
+  if (id === 'painel' && !calMesAtual) {
+    calMesAtual = new Date();
+    setTimeout(renderCalendario, 100);
+  }
 }
 
 // ================================================================
@@ -1659,14 +1664,7 @@ function montarHTMLRelatorio(registros, inicio, fim, tipo) {
 }
 
 // Inicializa calendário quando painel é aberto pela primeira vez
-const _switchTabOriginal = switchTab;
-function switchTab(id, btn) {
-  _switchTabOriginal(id, btn);
-  if (id === 'painel' && !calMesAtual) {
-    calMesAtual = new Date();
-    setTimeout(renderCalendario, 100);
-  }
-}
+// (integrado diretamente na função switchTab original — sem wrapper)
 
 </script>
 </body>
